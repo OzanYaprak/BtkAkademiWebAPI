@@ -26,7 +26,7 @@ namespace SecondProject.Controllers
                 new Product { Id = 3,ProductName="Limon" }
             };
 
-            _logger.LogInformation("GetAllProducts Action Has Been Called.");
+            _logger.LogInformation("GetAllProducts Action Has Been Called."); //Uygulama Çalıştırıldığında ve Method'a İstek Atıldığında Konsolda Gözükür.
 
             return Ok(products);
         }
