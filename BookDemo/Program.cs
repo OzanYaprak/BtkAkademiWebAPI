@@ -1,4 +1,5 @@
-namespace SecondProject
+
+namespace BookDemo
 {
     public class Program
     {
@@ -13,22 +14,19 @@ namespace SecondProject
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Logging.ClearProviders(); // Varsayýlan olarak eklenen tüm log saðlayýcýlarýný temizler. Böylece sadece manuel olarak eklenen saðlayýcýlar aktif olur.
-            builder.Logging.AddConsole(); // Konsola log yazdýrmak için Console Logger'ý ekler.
-            builder.Logging.AddDebug(); // Visual Studio'nun Debug penceresine log yazdýrmak için Debug Logger'ý ekler.
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            //if (app.Environment.IsDevelopment())
-            //{
-            app.UseSwagger();
-            app.UseSwaggerUI();
-            //}
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
 
             app.MapControllers();
 

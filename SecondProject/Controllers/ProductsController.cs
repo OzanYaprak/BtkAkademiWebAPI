@@ -30,5 +30,13 @@ namespace SecondProject.Controllers
 
             return Ok(products);
         }
+
+        [HttpPost]
+        public IActionResult GetProducts([FromBody] Product product)
+        {
+            _logger.LogWarning("Product has been created.");
+
+            return StatusCode(201); // Created
+        }
     }
 }
