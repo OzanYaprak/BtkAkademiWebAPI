@@ -1,4 +1,3 @@
-
 namespace BookDemo
 {
     public class Program
@@ -9,7 +8,8 @@ namespace BookDemo
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddNewtonsoftJson(); // Ýlave Olarak AddNewtonsoftJson()
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -26,7 +26,6 @@ namespace BookDemo
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
