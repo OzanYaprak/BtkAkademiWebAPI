@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using WebApi.Repositories;
+
 namespace WebApi
 {
     public class Program
@@ -13,6 +16,8 @@ namespace WebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
 
             var app = builder.Build();
 
