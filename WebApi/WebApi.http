@@ -4,3 +4,18 @@ GET {{WebApi_HostAddress}}/api/books
 
 ###
 
+
+@id=4
+GET {{WebApi_HostAddress}}/api/Books/{{id}}
+
+###
+
+POST {{WebApi_HostAddress}}/api/books
+Content-Type: application/json
+
+{
+  "title": "ozanYaprak",
+  "price": 350
+}
+
+###
