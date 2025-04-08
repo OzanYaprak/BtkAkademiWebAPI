@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Repositories.EFCore.Context;
+using WebApi.Extensions;
 
 namespace WebApi
 {
@@ -18,7 +19,7 @@ namespace WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<RepositoryContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
+            builder.Services.ConfigureSQLContext(builder.Configuration); // WebApi.Extensions -> ServiceExtensions
 
             var app = builder.Build();
 
