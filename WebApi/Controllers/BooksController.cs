@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Entities.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Models;
+using Repositories.EFCore;
 using WebApi.Repositories;
 
 namespace WebApi.Controllers
@@ -9,12 +10,16 @@ namespace WebApi.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly ApplicationContext _context;
+        #region Dependency Injection
 
-        public BooksController(ApplicationContext context)
+        private readonly RepositoryContext _context;
+
+        public BooksController(RepositoryContext context)
         {
             _context = context;
         }
+
+        #endregion
 
         [HttpGet]
         public IActionResult GetAllBooks()
@@ -60,7 +65,12 @@ namespace WebApi.Controllers
                 _context.Books.Add(book);
                 _context.SaveChanges();
 
-                return StatusCode(201, book);
+                //return StatusCode(201, book); // Mesaj ile döndürmek istiyorsak aşağıdaki yöntem
+                return StatusCode(201, new
+                {
+                    message = "Başarılı",
+                    data = book
+                });
             }
             catch (Exception ex)
             {
