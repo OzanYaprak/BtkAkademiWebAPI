@@ -1,7 +1,7 @@
 ﻿using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Repositories.EFCore;
+using Repositories.EFCore.Context;
 using WebApi.Repositories;
 
 namespace WebApi.Controllers

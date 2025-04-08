@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebApi.Repositories.Config;
 
-namespace Repositories.EFCore
+namespace Repositories.EFCore.Context
 {
     public class RepositoryContext : DbContext
     {

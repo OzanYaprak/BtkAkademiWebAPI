@@ -1,6 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
-using Repositories.EFCore;
+using Repositories.EFCore.Context;
 
 namespace WebApi
 {
