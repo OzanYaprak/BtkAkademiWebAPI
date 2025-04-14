@@ -1,0 +1,71 @@
+﻿using Entities.Models;
+using Repositories.Interfaces;
+using Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Managers
+{
+    public class BookManager : IBookService
+    {
+        #region Constructor
+
+        private readonly IRepositoryManager _manager;
+
+        public BookManager(IRepositoryManager manager)
+        {
+            _manager = manager;
+        }
+
+        #endregion Constructor
+
+        public Book CreateOneBook(Book book)
+        {
+            if (book is null)
+            {
+                throw new ArgumentNullException(nameof(book));
+            }
+
+            _manager.BookRepository.Create(book);
+            _manager.Save();
+            return book;
+        }
+
+        public void DeleteOneBook(int id, bool trackChanges)
+        {
+            // Check Entity
+            var entity = _manager.BookRepository.GetOneBookById(id, trackChanges);
+            if (entity is null) { throw new Exception($"Book with id:{id} could not found."); }
+
+            _manager.BookRepository.Delete(entity);
+            _manager.Save();
+        }
+
+        public IEnumerable<Book> GetAllBooks(bool trackChanges)
+        {
+            return _manager.BookRepository.GetAllBooks(trackChanges);
+        }
+
+        public Book GetOneBookById(int id, bool trackChanges)
+        {
+            return _manager.BookRepository.GetOneBookById(id, trackChanges);
+        }
+
+        public void UpdateOneBook(int id, Book book, bool trackChanges)
+        {
+            // Check Entity
+            var entity = _manager.BookRepository.GetOneBookById(id, trackChanges);
+            if (entity is null) { throw new Exception($"Book with id:{id} could not found."); }
+            if (book is null) { throw new ArgumentException(nameof(book)); }
+
+            entity.Title = book.Title;
+            entity.Price = book.Price;
+
+            _manager.BookRepository.Update(entity);
+            _manager.Save();
+        }
+    }
+}

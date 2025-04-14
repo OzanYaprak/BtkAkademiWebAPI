@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entiti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{91814061-C863-4319-8879-5708C8C705B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{5AA28BD0-B1AA-40E7-A34A-1E548D8FDCBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{91814061-C863-4319-8879-5708C8C705B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91814061-C863-4319-8879-5708C8C705B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91814061-C863-4319-8879-5708C8C705B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AA28BD0-B1AA-40E7-A34A-1E548D8FDCBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA28BD0-B1AA-40E7-A34A-1E548D8FDCBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA28BD0-B1AA-40E7-A34A-1E548D8FDCBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA28BD0-B1AA-40E7-A34A-1E548D8FDCBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{41488FA8-F95A-4874-B77F-25407CA19DAD} = {605E376D-B5C7-4C20-A627-051B727BA87F}
 		{E5B273E5-A625-445E-AFAB-5975280D0BBB} = {605E376D-B5C7-4C20-A627-051B727BA87F}
 		{91814061-C863-4319-8879-5708C8C705B9} = {605E376D-B5C7-4C20-A627-051B727BA87F}
+		{5AA28BD0-B1AA-40E7-A34A-1E548D8FDCBA} = {605E376D-B5C7-4C20-A627-051B727BA87F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F19A8C94-B22B-4765-A79E-CBBA3B42C913}
