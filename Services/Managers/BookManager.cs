@@ -22,7 +22,7 @@ namespace Services.Managers
 
         #endregion Constructor
 
-        public Book CreateOneBook(Book book)
+        public Book Create(Book book)
         {
             if (book is null)
             {
@@ -34,7 +34,7 @@ namespace Services.Managers
             return book;
         }
 
-        public void DeleteOneBook(int id, bool trackChanges)
+        public void Delete(int id, bool trackChanges)
         {
             // Check Entity
             var entity = _manager.BookRepository.GetOneBookById(id, trackChanges);
@@ -54,7 +54,7 @@ namespace Services.Managers
             return _manager.BookRepository.GetOneBookById(id, trackChanges);
         }
 
-        public void UpdateOneBook(int id, Book book, bool trackChanges)
+        public void Update(int id, Book book, bool trackChanges)
         {
             // Check Entity
             var entity = _manager.BookRepository.GetOneBookById(id, trackChanges);

@@ -2,6 +2,8 @@
 using Repositories.EFCore.Context;
 using Repositories.Interfaces;
 using Repositories.Managers;
+using Services.Interfaces;
+using Services.Managers;
 
 namespace WebApi.Extensions
 {
@@ -15,6 +17,11 @@ namespace WebApi.Extensions
         public static void ConfigureRepositoryManager(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryManager, RepositoryManager>();
+        }
+
+        public static void ConfigureServiceManager(this IServiceCollection services)
+        {
+            services.AddScoped<IServiceManager, ServiceManager>();
         }
     }
 }

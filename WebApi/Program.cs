@@ -17,7 +17,8 @@ namespace WebApi
             builder.Services.AddSwaggerGen();
 
             builder.Services.ConfigureSQLContext(builder.Configuration); // WebApi.Extensions -> ServiceExtensions
-            builder.Services.ConfigureRepositoryManager();
+            builder.Services.ConfigureRepositoryManager(); // WebApi.Extensions -> ServiceExtensions
+            builder.Services.ConfigureServiceManager(); // WebApi.Extensions -> ServiceExtensions
 
             var app = builder.Build();
 

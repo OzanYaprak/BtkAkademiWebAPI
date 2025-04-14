@@ -13,10 +13,10 @@ namespace Services.Interfaces
 
         Book GetOneBookById(int id, bool trackChanges);
 
-        Book CreateOneBook(Book book);
+        Book Create(Book book);
 
-        void UpdateOneBook(int id, Book book, bool trackChanges);
+        void Update(int id, Book book, bool trackChanges);
 
-        void DeleteOneBook(int id, bool trackChanges);
+        void Delete(int id, bool trackChanges);
     }
 }

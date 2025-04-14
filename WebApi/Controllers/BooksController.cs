@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.EFCore.Context;
 using Repositories.Interfaces;
+using Services.Interfaces;
 using WebApi.Repositories;
 
 namespace WebApi.Controllers
@@ -15,9 +16,9 @@ namespace WebApi.Controllers
     {
         #region Dependency Injection
 
-        private readonly IRepositoryManager _manager;
+        private readonly IServiceManager _manager;
 
-        public BooksController(IRepositoryManager manager)
+        public BooksController(IServiceManager manager)
         {
             _manager = manager;
         }
@@ -29,7 +30,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                var books = _manager.BookRepository.GetAllBooks(false);
+                var books = _manager.BookService.GetAllBooks(false);
                 return Ok(books);
             }
             catch (Exception ex)
@@ -43,7 +44,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                var book = _manager.BookRepository.GetOneBookById(id, false);
+                var book = _manager.BookService.GetOneBookById(id, false);
 
                 if (book == null) { return NotFound(); } //404
 
@@ -62,11 +63,10 @@ namespace WebApi.Controllers
             {
                 if (book is null)
                 {
-                    return BadRequest(); //404
+                    return BadRequest(); //400
                 }
 
-                _manager.BookRepository.Create(book);
-                _manager.Save();
+                _manager.BookService.Create(book);
 
                 //return StatusCode(201, book); // Mesaj ile döndürmek istiyorsak aşağıdaki yöntem
                 return StatusCode(201, new
@@ -86,18 +86,11 @@ namespace WebApi.Controllers
         {
             try
             {
-                // check entity?
-                var entity = _manager.BookRepository.GetOneBookById(id, true);
+                if (book is null) { return BadRequest(); } //404
 
-                if (entity is null) { return NotFound(); } // 404
-                if (id != book.Id) { return BadRequest(); } // 400
+                _manager.BookService.Update(id, book, true);
 
-                entity.Title = book.Title;
-                entity.Price = book.Price;
-
-                _manager.Save();
-
-                return Ok(book);
+                return NoContent(); // 204
             }
             catch (Exception ex)
             {
@@ -110,15 +103,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                var entity = _manager.BookRepository.GetOneBookById(id, false);
-
-                if (entity is null)
-                {
-                    return NotFound(new { statusCode = 404, message = $"Book with id:{id} could not found." }); // 404
-                }
-
-                _manager.BookRepository.Delete(entity);
-                _manager.Save();
+                _manager.BookService.Delete(id, false);
 
                 return NoContent();
             }
@@ -133,7 +118,7 @@ namespace WebApi.Controllers
         //{
         //    try
         //    {
-        //        var entity = _manager.BookRepository.GetOneBookById(id, true);
+        //        var entity = _manager.BookService.GetOneBookById(id, true);
 
         //        if (entity is null)
         //        {
@@ -141,7 +126,7 @@ namespace WebApi.Controllers
         //        }
 
         //        bookPatch.ApplyTo(entity);
-        //        _manager.BookRepository.Update(entity);
+        //        _manager.BookService.Update(entity);
 
         //        return NoContent();
         //    }
