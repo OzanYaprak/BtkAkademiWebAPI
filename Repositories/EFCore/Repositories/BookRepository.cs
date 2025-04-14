@@ -17,12 +17,13 @@ namespace Repositories.EFCore.Repositories
         }
 
         public void CreateOneBook(Book book) => Create(book);
+
         public void DeleteOneBook(Book book) => Delete(book);
+
         public void UpdateOneBook(Book book) => Update(book);
 
+        public Book GetOneBookById(int id, bool trackChanges) => FindByCondition(x => x.Id == id, trackChanges).FirstOrDefault();
 
         public IQueryable<Book> GetAllBooks(bool trackChanges) => FindAll(trackChanges).OrderBy(x => x.Id);
-        public IQueryable<Book> GetOneBookById(int id, bool trackChanges) => FindByCondition(x => x.Id == id, trackChanges);
-
     }
 }

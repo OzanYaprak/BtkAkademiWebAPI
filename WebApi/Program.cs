@@ -1,6 +1,3 @@
-
-using Microsoft.EntityFrameworkCore;
-using Repositories.EFCore.Context;
 using WebApi.Extensions;
 
 namespace WebApi
@@ -20,6 +17,7 @@ namespace WebApi
             builder.Services.AddSwaggerGen();
 
             builder.Services.ConfigureSQLContext(builder.Configuration); // WebApi.Extensions -> ServiceExtensions
+            builder.Services.ConfigureRepositoryManager();
 
             var app = builder.Build();
 
@@ -33,7 +31,6 @@ namespace WebApi
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
