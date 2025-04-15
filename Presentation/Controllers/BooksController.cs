@@ -1,17 +1,12 @@
-﻿using Azure;
-using Entities.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using Repositories.EFCore.Context;
-using Repositories.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
-using WebApi.Repositories;
+using Entities.Models;
+using Microsoft.AspNetCore.JsonPatch;
 
-namespace WebApi.Controllers
+namespace Presentation.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/books")]
     public class BooksController : ControllerBase
     {
         #region Dependency Injection
