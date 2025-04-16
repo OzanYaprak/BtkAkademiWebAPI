@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using WebApi.Extensions;
 
 namespace WebApi
@@ -10,7 +11,7 @@ namespace WebApi
 
             // Add services to the container.
 
-            builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly); // AddApplicationPart kýsmý controller kýsmýný presentation kýsmýna taþýdýðýmýz için yazýldý.
+            builder.Services.AddControllers(); //.AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly); // AddApplicationPart kýsmý controller kýsmýný presentation kýsmýna taþýdýðýmýz için yazýldý.
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -26,7 +27,7 @@ namespace WebApi
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwagger();
             }
 
             app.UseHttpsRedirection();

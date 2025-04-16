@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using Entities.Models;
-using Microsoft.AspNetCore.JsonPatch;
 
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Route("api/books")]
+    [Route("api/books2")]
     public class BooksController : ControllerBase
     {
         #region Dependency Injection
