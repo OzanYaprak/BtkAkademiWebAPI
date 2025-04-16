@@ -5,7 +5,7 @@ using Entities.Models;
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Route("api/books2")]
+    [Route("api/books")]
     public class BooksController : ControllerBase
     {
         #region Dependency Injection

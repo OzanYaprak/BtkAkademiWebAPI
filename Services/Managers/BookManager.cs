@@ -14,21 +14,18 @@ namespace Services.Managers
         #region Constructor
 
         private readonly IRepositoryManager _manager;
+        private readonly ILoggerService _logger;
 
-        public BookManager(IRepositoryManager manager)
+        public BookManager(IRepositoryManager manager, ILoggerService logger)
         {
             _manager = manager;
+            _logger = logger;
         }
 
         #endregion Constructor
 
         public Book Create(Book book)
         {
-            if (book is null)
-            {
-                throw new ArgumentNullException(nameof(book));
-            }
-
             _manager.BookRepository.Create(book);
             _manager.Save();
             return book;
@@ -38,7 +35,12 @@ namespace Services.Managers
         {
             // Check Entity
             var entity = _manager.BookRepository.GetOneBookById(id, trackChanges);
-            if (entity is null) { throw new Exception($"Book with id:{id} could not found."); }
+            if (entity is null)
+            {
+                string message = $"The book with id:{id} could not found.";
+                _logger.LogInfo(message);
+                throw new Exception(message);
+            }
 
             _manager.BookRepository.Delete(entity);
             _manager.Save();
@@ -58,8 +60,12 @@ namespace Services.Managers
         {
             // Check Entity
             var entity = _manager.BookRepository.GetOneBookById(id, trackChanges);
-            if (entity is null) { throw new Exception($"Book with id:{id} could not found."); }
-            if (book is null) { throw new ArgumentException(nameof(book)); }
+            if (entity is null)
+            {
+                string message = $"Book with id:{id} could not found.";
+                _logger.LogInfo(message);
+                throw new Exception(message);
+            }
 
             entity.Title = book.Title;
             entity.Price = book.Price;

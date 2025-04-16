@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using NLog;
 using WebApi.Extensions;
 
 namespace WebApi
@@ -9,8 +10,10 @@ namespace WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Nlog Configuration
+            LogManager.GetLogger(String.Concat(Directory.GetCurrentDirectory(), "/Nlog.config"));
 
+            // Add services to the container.
             builder.Services.AddControllers(); //.AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly); // AddApplicationPart kýsmý controller kýsmýný presentation kýsmýna taþýdýðýmýz için yazýldý.
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -20,6 +23,7 @@ namespace WebApi
             builder.Services.ConfigureSQLContext(builder.Configuration); // WebApi.Extensions -> ServiceExtensions
             builder.Services.ConfigureRepositoryManager(); // WebApi.Extensions -> ServiceExtensions
             builder.Services.ConfigureServiceManager(); // WebApi.Extensions -> ServiceExtensions
+            builder.Services.ConfigureLoggerService(); // WebApi.Extensions -> ServiceExtensions
 
             var app = builder.Build();
 
@@ -27,7 +31,7 @@ namespace WebApi
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();

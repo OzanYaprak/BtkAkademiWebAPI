@@ -1,0 +1,4 @@
+
+
+
+NLog Dosya Yolu --> C:\Users\oeyaprak\source\repos\BtkAkademiWebAPI\WebApi\bin\Debug\net8.0\logs
