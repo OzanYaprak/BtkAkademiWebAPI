@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using Entities.Models;
+using Entities.Exceptions;
 
 namespace Presentation.Controllers
 {
@@ -22,89 +23,52 @@ namespace Presentation.Controllers
         [HttpGet]
         public IActionResult GetAllBooks()
         {
-            try
-            {
-                var books = _manager.BookService.GetAllBooks(false);
-                return Ok(books);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            var books = _manager.BookService.GetAllBooks(false);
+            return Ok(books);
         }
 
         [HttpGet("{id:int}")]
         public IActionResult GetOneBook([FromRoute(Name = "id")] int id)
         {
-            try
-            {
-                var book = _manager.BookService.GetOneBookById(id, false);
+            var book = _manager.BookService.GetOneBookById(id, false);
 
-                if (book == null) { return NotFound(); } //404
-
-                return Ok(book);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return Ok(book);
         }
 
         [HttpPost]
         public IActionResult CreateBook([FromBody] Book book)
         {
-            try
+            if (book is null)
             {
-                if (book is null)
-                {
-                    return BadRequest(); //400
-                }
-
-                _manager.BookService.Create(book);
-
-                //return StatusCode(201, book); // Mesaj ile döndürmek istiyorsak aşağıdaki yöntem
-                return StatusCode(201, new
-                {
-                    message = "Başarılı",
-                    data = book
-                });
+                return BadRequest(); //400
             }
-            catch (Exception ex)
+
+            _manager.BookService.Create(book);
+
+            //return StatusCode(201, book); // Mesaj ile döndürmek istiyorsak aşağıdaki yöntem
+            return StatusCode(201, new
             {
-                return BadRequest(ex.Message);
-            }
+                message = "Başarılı",
+                data = book
+            });
         }
 
         [HttpPut("{id:int}")]
         public IActionResult UpdateBook([FromRoute(Name = "id")] int id, [FromBody] Book book)
         {
-            try
-            {
-                if (book is null) { return BadRequest(); } //404
+            if (book is null) { return BadRequest(); } //404
 
-                _manager.BookService.Update(id, book, true);
+            _manager.BookService.Update(id, book, true);
 
-                return NoContent(); // 204
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return NoContent(); // 204
         }
 
         [HttpDelete("{id:int}")]
         public IActionResult DeleteBook([FromRoute(Name = "id")] int id)
         {
-            try
-            {
-                _manager.BookService.Delete(id, false);
+            _manager.BookService.Delete(id, false);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return NoContent();
         }
 
         //[HttpDelete("{id:int}")]

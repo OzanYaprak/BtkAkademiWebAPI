@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using NLog;
+using Services.Interfaces;
 using WebApi.Extensions;
 
 namespace WebApi
@@ -27,11 +28,20 @@ namespace WebApi
 
             var app = builder.Build();
 
+            // Nlog Configuration
+            var logger = app.Services.GetRequiredService<ILoggerService>();
+            app.ConfigureExceptionHandler(logger); // WebApi.Extensions -> ExceptionMiddlewareExtensions
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+            }
+
+            if (app.Environment.IsProduction())
+            {
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();

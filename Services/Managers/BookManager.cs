@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities.Exceptions;
+using Entities.Models;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using System;
@@ -37,9 +38,11 @@ namespace Services.Managers
             var entity = _manager.BookRepository.GetOneBookById(id, trackChanges);
             if (entity is null)
             {
-                string message = $"The book with id:{id} could not found.";
-                _logger.LogInfo(message);
-                throw new Exception(message);
+                //string message = $"The book with id:{id} could not found.";
+                //_logger.LogInfo(message);
+                //throw new Exception(message);
+
+                throw new BookNotFoundException(id);
             }
 
             _manager.BookRepository.Delete(entity);
@@ -53,7 +56,11 @@ namespace Services.Managers
 
         public Book GetOneBookById(int id, bool trackChanges)
         {
-            return _manager.BookRepository.GetOneBookById(id, trackChanges);
+            var book = _manager.BookRepository.GetOneBookById(id, trackChanges);
+
+            if (book == null) { throw new BookNotFoundException(id); }
+
+            return book;
         }
 
         public void Update(int id, Book book, bool trackChanges)
@@ -62,9 +69,11 @@ namespace Services.Managers
             var entity = _manager.BookRepository.GetOneBookById(id, trackChanges);
             if (entity is null)
             {
-                string message = $"Book with id:{id} could not found.";
-                _logger.LogInfo(message);
-                throw new Exception(message);
+                //string message = $"Book with id:{id} could not found.";
+                //_logger.LogInfo(message);
+                //throw new Exception(message);
+
+                throw new BookNotFoundException(id);
             }
 
             entity.Title = book.Title;
