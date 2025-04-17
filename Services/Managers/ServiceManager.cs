@@ -1,4 +1,5 @@
-﻿using Repositories.Interfaces;
+﻿using AutoMapper;
+using Repositories.Interfaces;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace Services.Managers
 
         private readonly Lazy<IBookService> _bookService;
 
-        public ServiceManager(IRepositoryManager repositoryManager, ILoggerService logger)
+        public ServiceManager(IRepositoryManager repositoryManager, ILoggerService logger, IMapper mapper)
         {
-            _bookService = new Lazy<IBookService>(() => new BookManager(repositoryManager, logger));
+            _bookService = new Lazy<IBookService>(() => new BookManager(repositoryManager, logger, mapper));
         }
 
         #endregion Constructor

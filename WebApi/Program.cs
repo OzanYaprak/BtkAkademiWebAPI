@@ -26,6 +26,8 @@ namespace WebApi
             builder.Services.ConfigureServiceManager(); // WebApi.Extensions -> ServiceExtensions
             builder.Services.ConfigureLoggerService(); // WebApi.Extensions -> ServiceExtensions
 
+            builder.Services.AddAutoMapper(typeof(Program)); // AutoMapper
+
             var app = builder.Build();
 
             // Nlog Configuration

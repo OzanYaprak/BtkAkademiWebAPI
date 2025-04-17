@@ -1,4 +1,6 @@
-﻿using Entities.Exceptions;
+﻿using AutoMapper;
+using Entities.DataTransferObjects;
+using Entities.Exceptions;
 using Entities.Models;
 using Repositories.Interfaces;
 using Services.Interfaces;
@@ -16,11 +18,13 @@ namespace Services.Managers
 
         private readonly IRepositoryManager _manager;
         private readonly ILoggerService _logger;
+        private readonly IMapper _mapper;
 
-        public BookManager(IRepositoryManager manager, ILoggerService logger)
+        public BookManager(IRepositoryManager manager, ILoggerService logger, IMapper mapper)
         {
             _manager = manager;
             _logger = logger;
+            _mapper = mapper;
         }
 
         #endregion Constructor
@@ -63,7 +67,7 @@ namespace Services.Managers
             return book;
         }
 
-        public void Update(int id, Book book, bool trackChanges)
+        public void Update(int id, BookDTOForUpdate bookDto, bool trackChanges)
         {
             // Check Entity
             var entity = _manager.BookRepository.GetOneBookById(id, trackChanges);
@@ -76,8 +80,7 @@ namespace Services.Managers
                 throw new BookNotFoundException(id);
             }
 
-            entity.Title = book.Title;
-            entity.Price = book.Price;
+            entity = _mapper.Map<Book>(bookDto);
 
             _manager.BookRepository.Update(entity);
             _manager.Save();

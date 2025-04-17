@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities.DataTransferObjects;
+using Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Services.Interfaces
 
         Book Create(Book book);
 
-        void Update(int id, Book book, bool trackChanges);
+        void Update(int id, BookDTOForUpdate bookDto, bool trackChanges);
 
         void Delete(int id, bool trackChanges);
     }

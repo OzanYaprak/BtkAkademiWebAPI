@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Services.Interfaces;
+﻿using Entities.DataTransferObjects;
 using Entities.Models;
-using Entities.Exceptions;
+using Microsoft.AspNetCore.Mvc;
+using Services.Interfaces;
 
 namespace Presentation.Controllers
 {
@@ -54,11 +54,11 @@ namespace Presentation.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult UpdateBook([FromRoute(Name = "id")] int id, [FromBody] Book book)
+        public IActionResult UpdateBook([FromRoute(Name = "id")] int id, [FromBody] BookDTOForUpdate bookDto)
         {
-            if (book is null) { return BadRequest(); } //404
+            if (bookDto is null) { return BadRequest(); } //404
 
-            _manager.BookService.Update(id, book, true);
+            _manager.BookService.Update(id, bookDto, true);
 
             return NoContent(); // 204
         }
