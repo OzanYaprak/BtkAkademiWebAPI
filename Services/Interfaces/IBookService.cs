@@ -10,7 +10,7 @@ namespace Services.Interfaces
 {
     public interface IBookService
     {
-        IEnumerable<Book> GetAllBooks(bool trackChanges);
+        IEnumerable<BookDTO> GetAllBooks(bool trackChanges);
 
         Book GetOneBookById(int id, bool trackChanges);
 
