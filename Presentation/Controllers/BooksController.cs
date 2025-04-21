@@ -36,14 +36,14 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateBook([FromBody] Book book)
+        public IActionResult CreateBook([FromBody] BookDTOForInsertion bookDto)
         {
-            if (book is null)
+            if (bookDto is null)
             {
                 return BadRequest(); //400
             }
 
-            _manager.BookService.Create(book);
+            var book = _manager.BookService.Create(bookDto);
 
             //return StatusCode(201, book); // Mesaj ile döndürmek istiyorsak aşağıdaki yöntem
             return StatusCode(201, new

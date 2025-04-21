@@ -12,9 +12,9 @@ namespace Services.Interfaces
     {
         IEnumerable<BookDTO> GetAllBooks(bool trackChanges);
 
-        Book GetOneBookById(int id, bool trackChanges);
+        BookDTO GetOneBookById(int id, bool trackChanges);
 
-        Book Create(Book book);
+        BookDTO Create(BookDTOForInsertion book);
 
         void Update(int id, BookDTOForUpdate bookDto, bool trackChanges);
 

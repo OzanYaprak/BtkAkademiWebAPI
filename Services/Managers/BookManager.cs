@@ -29,11 +29,14 @@ namespace Services.Managers
 
         #endregion Constructor
 
-        public Book Create(Book book)
+        public BookDTO Create(BookDTOForInsertion bookDto)
         {
-            _manager.BookRepository.Create(book);
+            var entity = _mapper.Map<Book>(bookDto);
+
+            _manager.BookRepository.Create(entity);
             _manager.Save();
-            return book;
+
+            return _mapper.Map<BookDTO>(entity); ;
         }
 
         public void Delete(int id, bool trackChanges)
@@ -60,13 +63,13 @@ namespace Services.Managers
             return mapper;
         }
 
-        public Book GetOneBookById(int id, bool trackChanges)
+        public BookDTO GetOneBookById(int id, bool trackChanges)
         {
             var book = _manager.BookRepository.GetOneBookById(id, trackChanges);
 
             if (book == null) { throw new BookNotFoundException(id); }
 
-            return book;
+            return _mapper.Map<BookDTO>(book);
         }
 
         public void Update(int id, BookDTOForUpdate bookDto, bool trackChanges)
