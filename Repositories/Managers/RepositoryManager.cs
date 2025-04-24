@@ -15,16 +15,17 @@ namespace Repositories.Managers
 
         private readonly RepositoryContext _context;
         private readonly Lazy<IBookRepository> _bookRepository;
+
         public RepositoryManager(RepositoryContext context)
         {
             _context = context;
             _bookRepository = new Lazy<IBookRepository>(() => new BookRepository(_context));
         }
 
-        #endregion
+        #endregion Constructor
 
         public IBookRepository BookRepository => _bookRepository.Value;
 
-        public void Save() => _context.SaveChanges();
+        public async Task SaveAsync() => await _context.SaveChangesAsync();
     }
 }

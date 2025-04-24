@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using Repositories.EFCore.Base;
 using Repositories.EFCore.Context;
 using Repositories.Interfaces;
@@ -16,14 +17,25 @@ namespace Repositories.EFCore.Repositories
         {
         }
 
-        public void CreateOneBook(Book book) => Create(book);
+        public void CreateOneBook(Book book)
+        {
+            Create(book);
+        }
 
-        public void DeleteOneBook(Book book) => Delete(book);
+        public void DeleteOneBook(Book book)
+        {
+            Delete(book);
+        }
 
-        public void UpdateOneBook(Book book) => Update(book);
+        public void UpdateOneBook(Book book)
+        {
+            Update(book);
+        }
 
-        public Book GetOneBookById(int id, bool trackChanges) => FindByCondition(x => x.Id == id, trackChanges).FirstOrDefault();
+        // Veya methodlar aşağıdakiler gibi scope içerisine alınmadan döndürülebilinir.
 
-        public IQueryable<Book> GetAllBooks(bool trackChanges) => FindAll(trackChanges).OrderBy(x => x.Id);
+        public async Task<Book> GetOneBookByIdAsync(int id, bool trackChanges) => await FindByCondition(x => x.Id == id, trackChanges).FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<Book>> GetAllBooksAsync(bool trackChanges) => await FindAll(trackChanges).OrderBy(x => x.Id).ToListAsync();
     }
 }

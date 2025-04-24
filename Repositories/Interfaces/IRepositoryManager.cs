@@ -9,6 +9,7 @@ namespace Repositories.Interfaces
     public interface IRepositoryManager
     {
         IBookRepository BookRepository { get; }
-        void Save();
+
+        Task SaveAsync();
     }
 }

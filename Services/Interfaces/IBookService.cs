@@ -10,18 +10,18 @@ namespace Services.Interfaces
 {
     public interface IBookService
     {
-        IEnumerable<BookDTO> GetAllBooks(bool trackChanges);
+        Task<IEnumerable<BookDTO>> GetAllBooksAsync(bool trackChanges);
 
-        BookDTO GetOneBookById(int id, bool trackChanges);
+        Task<BookDTO> GetOneBookByIdAsync(int id, bool trackChanges);
 
-        BookDTO Create(BookDTOForInsertion book);
+        Task<BookDTO> CreateAsync(BookDTOForInsertion book);
 
-        void Update(int id, BookDTOForUpdate bookDto, bool trackChanges);
+        Task UpdateAsync(int id, BookDTOForUpdate bookDto, bool trackChanges);
 
-        void Delete(int id, bool trackChanges);
+        Task DeleteAsync(int id, bool trackChanges);
 
-        void SaveChangesForPatch(BookDTOForUpdate bookDTOForUpdate, Book book);
+        Task SaveChangesForPatchAsync(BookDTOForUpdate bookDTOForUpdate, Book book);
 
-        (BookDTOForUpdate bookDTOForUpdate, Book book) GetOneBookForPatch(int id, bool trackChanges); // (BookDTOForUpdate bookDTOForUpdate, Book book) -> Bu kısım bir tuple ifadesi
+        Task<(BookDTOForUpdate bookDTOForUpdate, Book book)> GetOneBookForPatchAsync(int id, bool trackChanges); // (BookDTOForUpdate bookDTOForUpdate, Book book) -> Bu kısım bir tuple ifadesi
     }
 }
