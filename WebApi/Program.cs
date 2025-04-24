@@ -23,7 +23,8 @@ namespace WebApi
             })
                 .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly) // AddApplicationPart kýsmý controller kýsmýný presentation kýsmýna taþýdýðýmýz için yazýldý.
                 .AddXmlDataContractSerializerFormatters() // Ýçerik pazarlýðý için xml türüde de çýkýþ kabul edilir
-                .AddCustomCsvFormatter(); // CsvOutputFormatter
+                .AddCustomCsvFormatter() // CsvOutputFormatter
+                .AddNewtonsoftJson(); 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

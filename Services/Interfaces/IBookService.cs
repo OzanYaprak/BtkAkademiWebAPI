@@ -19,5 +19,9 @@ namespace Services.Interfaces
         void Update(int id, BookDTOForUpdate bookDto, bool trackChanges);
 
         void Delete(int id, bool trackChanges);
+
+        void SaveChangesForPatch(BookDTOForUpdate bookDTOForUpdate, Book book);
+
+        (BookDTOForUpdate bookDTOForUpdate, Book book) GetOneBookForPatch(int id, bool trackChanges); // (BookDTOForUpdate bookDTOForUpdate, Book book) -> Bu kısım bir tuple ifadesi
     }
 }

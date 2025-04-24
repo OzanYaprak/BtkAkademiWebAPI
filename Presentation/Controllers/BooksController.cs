@@ -1,5 +1,6 @@
 ﻿using Entities.DataTransferObjects;
 using Entities.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 
@@ -81,27 +82,22 @@ namespace Presentation.Controllers
             return NoContent();
         }
 
-        //[HttpDelete("{id:int}")]
-        //public IActionResult PartiallyUpdateBook([FromRoute(Name = "id")] int id, [FromBody] JsonPatchDocument<Book> bookPatch)
-        //{
-        //    try
-        //    {
-        //        var entity = _manager.BookService.GetOneBookById(id, true);
+        [HttpPatch("{id:int}")]
+        public IActionResult PartiallyUpdateBook([FromRoute(Name = "id")] int id, [FromBody] JsonPatchDocument<BookDTOForUpdate> bookPatch)
+        {
+            if (bookPatch is null) { return BadRequest(); } // 400
 
-        //        if (entity is null)
-        //        {
-        //            return NotFound(); // 404
-        //        }
+            var result = _manager.BookService.GetOneBookForPatch(id, false);
 
-        //        bookPatch.ApplyTo(entity);
-        //        _manager.BookService.Update(entity);
+            bookPatch.ApplyTo(result.bookDTOForUpdate, ModelState);
 
-        //        return NoContent();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
+            TryValidateModel(result.bookDTOForUpdate);
+
+            if (!ModelState.IsValid) { return UnprocessableEntity(ModelState); } // 422
+
+            _manager.BookService.SaveChangesForPatch(result.bookDTOForUpdate, result.book);
+
+            return NoContent(); // 204
+        }
     }
 }

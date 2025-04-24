@@ -72,6 +72,23 @@ namespace Services.Managers
             return _mapper.Map<BookDTO>(book);
         }
 
+        public (BookDTOForUpdate bookDTOForUpdate, Book book) GetOneBookForPatch(int id, bool trackChanges)
+        {
+            var book = _manager.BookRepository.GetOneBookById(id, trackChanges);
+
+            if (book == null) { throw new BookNotFoundException(id); }
+
+            var bookDtoForUpdate = _mapper.Map<BookDTOForUpdate>(book);
+
+            return (bookDtoForUpdate, book); // Tuple olarak dönüyoruz.
+        }
+
+        public void SaveChangesForPatch(BookDTOForUpdate bookDTOForUpdate, Book book)
+        {
+            _mapper.Map(bookDTOForUpdate, book);
+            _manager.Save();
+        }
+
         public void Update(int id, BookDTOForUpdate bookDto, bool trackChanges)
         {
             // Check Entity
