@@ -43,6 +43,11 @@ namespace Presentation.Controllers
                 return BadRequest(); //400
             }
 
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
+            }
+
             var book = _manager.BookService.Create(bookDto);
 
             //return StatusCode(201, book); // Mesaj ile döndürmek istiyorsak aşağıdaki yöntem

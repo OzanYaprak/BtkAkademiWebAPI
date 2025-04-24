@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 using Services.Interfaces;
 using WebApi.Extensions;
@@ -34,6 +35,11 @@ namespace WebApi
             builder.Services.ConfigureLoggerService(); // WebApi.Extensions -> ServiceExtensions
 
             builder.Services.AddAutoMapper(typeof(Program)); // AutoMapper
+
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
             var app = builder.Build();
 
