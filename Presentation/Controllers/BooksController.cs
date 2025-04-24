@@ -45,7 +45,7 @@ namespace Presentation.Controllers
 
             if (!ModelState.IsValid)
             {
-                return UnprocessableEntity(ModelState);
+                return UnprocessableEntity(ModelState); // 422
             }
 
             var book = _manager.BookService.Create(bookDto);
@@ -61,9 +61,14 @@ namespace Presentation.Controllers
         [HttpPut("{id:int}")]
         public IActionResult UpdateBook([FromRoute(Name = "id")] int id, [FromBody] BookDTOForUpdate bookDto)
         {
-            if (bookDto is null) { return BadRequest(); } //404
+            if (bookDto is null) { return BadRequest(); } //400
 
-            _manager.BookService.Update(id, bookDto, true);
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState); // 422
+            }
+
+            _manager.BookService.Update(id, bookDto, false);
 
             return NoContent(); // 204
         }
