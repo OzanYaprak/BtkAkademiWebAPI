@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using Presentation.ActionFilters;
 using Services.Interfaces;
 using WebApi.Extensions;
 
@@ -24,12 +25,14 @@ namespace WebApi
                 .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly) // AddApplicationPart kýsmý controller kýsmýný presentation kýsmýna taþýdýðýmýz için yazýldý.
                 .AddXmlDataContractSerializerFormatters() // Ýçerik pazarlýðý için xml türüde de çýkýþ kabul edilir
                 .AddCustomCsvFormatter() // CsvOutputFormatter
-                .AddNewtonsoftJson(); 
+                .AddNewtonsoftJson();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            // Ioc Kayýtlarý
+            builder.Services.ConfigureActionFilters(); // WebApi.Extensions -> ServiceExtensions
             builder.Services.ConfigureSQLContext(builder.Configuration); // WebApi.Extensions -> ServiceExtensions
             builder.Services.ConfigureRepositoryManager(); // WebApi.Extensions -> ServiceExtensions
             builder.Services.ConfigureServiceManager(); // WebApi.Extensions -> ServiceExtensions

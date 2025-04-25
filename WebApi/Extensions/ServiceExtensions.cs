@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Presentation.ActionFilters;
 using Repositories.EFCore.Context;
 using Repositories.Interfaces;
 using Repositories.Managers;
@@ -9,6 +10,8 @@ namespace WebApi.Extensions
 {
     public static class ServiceExtensions
     {
+        // Ioc Kayıtları
+
         public static void ConfigureSQLContext(this IServiceCollection services, IConfiguration configuration) // Eğer this eksikse, bu method bir extension method değil normal static method olarak kabul edilir.
         {
             services.AddDbContext<RepositoryContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
@@ -27,6 +30,12 @@ namespace WebApi.Extensions
         public static void ConfigureLoggerService(this IServiceCollection services)
         {
             services.AddSingleton<ILoggerService, LoggerManager>();
+        }
+
+        public static void ConfigureActionFilters(this IServiceCollection services)
+        {
+            services.AddScoped<ValidationFilterAttribute>(); // Validation Filter İçin Eklendi.
+            services.AddSingleton<LogFilterAttribute>(); // Log Filter İçin Eklendi.
         }
     }
 }

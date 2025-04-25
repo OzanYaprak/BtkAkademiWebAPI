@@ -2,10 +2,12 @@
 using Entities.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.ActionFilters;
 using Services.Interfaces;
 
 namespace Presentation.Controllers
 {
+    [ServiceFilter(typeof(LogFilterAttribute))] // Controller Seviyesinde Sistem
     [ApiController]
     [Route("api/books")]
     public class BooksController : ControllerBase
@@ -36,18 +38,21 @@ namespace Presentation.Controllers
             return Ok(book);
         }
 
+        // Method Seviyesinde Sistem [ServiceFilter(typeof(LogFilterAttribute), Order = 2)] // Order -> İşlem sırasını belirler
+        [ServiceFilter(typeof(ValidationFilterAttribute)/*, Order = 1*/)]
         [HttpPost]
         public async Task<IActionResult> CreateBookAsync([FromBody] BookDTOForInsertion bookDto)
         {
-            if (bookDto is null)
-            {
-                return BadRequest(); //400
-            }
+            // ValidationFilterAttribute Kısmına Taşındı
+            //if (bookDto is null)
+            //{
+            //    return BadRequest(); //400
+            //}
 
-            if (!ModelState.IsValid)
-            {
-                return UnprocessableEntity(ModelState); // 422
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return UnprocessableEntity(ModelState); // 422
+            //}
 
             var book = await _manager.BookService.CreateAsync(bookDto);
 
@@ -59,15 +64,17 @@ namespace Presentation.Controllers
             });
         }
 
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateBookAsync([FromRoute(Name = "id")] int id, [FromBody] BookDTOForUpdate bookDto)
         {
-            if (bookDto is null) { return BadRequest(); } //400
+            // ValidationFilterAttribute Kısmına Taşındı
+            //if (bookDto is null) { return BadRequest(); } //400
 
-            if (!ModelState.IsValid)
-            {
-                return UnprocessableEntity(ModelState); // 422
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return UnprocessableEntity(ModelState); // 422
+            //}
 
             await _manager.BookService.UpdateAsync(id, bookDto, false);
 
