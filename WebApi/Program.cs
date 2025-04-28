@@ -37,6 +37,7 @@ namespace WebApi
             builder.Services.ConfigureRepositoryManager(); // WebApi.Extensions -> ServiceExtensions
             builder.Services.ConfigureServiceManager(); // WebApi.Extensions -> ServiceExtensions
             builder.Services.ConfigureLoggerService(); // WebApi.Extensions -> ServiceExtensions
+            builder.Services.ConfigureCors(); // WebApi.Extensions -> ServiceExtensions
 
             builder.Services.AddAutoMapper(typeof(Program)); // AutoMapper
 
@@ -64,6 +65,8 @@ namespace WebApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("CorsPolicy"); // ServiceExtensions -> ConfigureCors() policy name
 
             app.UseAuthorization();
 

@@ -1,9 +1,12 @@
 ﻿using Entities.DataTransferObjects;
 using Entities.Models;
+using Entities.RequestFeatures;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ActionFilters;
 using Services.Interfaces;
+using System.Text.Json;
 
 namespace Presentation.Controllers
 {
@@ -24,10 +27,14 @@ namespace Presentation.Controllers
         #endregion Dependency Injection
 
         [HttpGet]
-        public async Task<IActionResult> GetAllBooksAsync()
+        public async Task<IActionResult> GetAllBooksAsync([FromQuery] BookParameters bookParameters)
         {
-            var books = await _manager.BookService.GetAllBooksAsync(false);
-            return Ok(books);
+            //var books = await _manager.BookService.GetAllBooksAsync(bookParameters, false);
+            var pagedResult = await _manager.BookService.GetAllBooksAsync(bookParameters, false);
+
+            Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
+
+            return Ok(pagedResult.books);
         }
 
         [HttpGet("{id:int}")]

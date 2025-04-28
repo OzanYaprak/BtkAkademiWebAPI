@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using Repositories.EFCore.Base;
 using Repositories.EFCore.Context;
@@ -34,8 +35,20 @@ namespace Repositories.EFCore.Repositories
 
         // Veya methodlar aşağıdakiler gibi scope içerisine alınmadan döndürülebilinir.
 
-        public async Task<Book> GetOneBookByIdAsync(int id, bool trackChanges) => await FindByCondition(x => x.Id == id, trackChanges).FirstOrDefaultAsync();
+        public async Task<Book> GetOneBookByIdAsync(int id, bool trackChanges) => await FindByCondition(x => x.Id == id, trackChanges)
+            .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<Book>> GetAllBooksAsync(bool trackChanges) => await FindAll(trackChanges).OrderBy(x => x.Id).ToListAsync();
+        //public async Task<IEnumerable<Book>> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges) => await FindAll(trackChanges)
+        //    .OrderBy(x => x.Id)
+        //    .Skip((bookParameters.PageNumber - 1) * bookParameters.PageSize)
+        //    .Take(bookParameters.PageSize)
+        //    .ToListAsync();
+
+        public async Task<PagedList<Book>> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges)
+        {
+            var books = await FindAll(trackChanges).OrderBy(x => x.Id).ToListAsync();
+
+            return PagedList<Book>.ToPagedList(books, bookParameters.PageNumber, bookParameters.PageSize);
+        }
     }
 }
