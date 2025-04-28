@@ -3,6 +3,7 @@ using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using Repositories.EFCore.Base;
 using Repositories.EFCore.Context;
+using Repositories.EFCore.Extensions;
 using Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.EFCore.Repositories
 {
-    public class BookRepository : RepositoryBase<Book>, IBookRepository
+    public sealed class BookRepository : RepositoryBase<Book>, IBookRepository
     {
         public BookRepository(RepositoryContext context) : base(context)
         {
@@ -46,7 +47,8 @@ namespace Repositories.EFCore.Repositories
 
         public async Task<PagedList<Book>> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges)
         {
-            var books = await FindAll(trackChanges).OrderBy(x => x.Id).ToListAsync();
+            //var books = await FindAll(trackChanges).OrderBy(x => x.Id).ToListAsync();
+            var books = await FindAll(trackChanges).FilterBooks(bookParameters.MinPrice, bookParameters.MaxPrice).OrderBy(x => x.Id).ToListAsync();
 
             return PagedList<Book>.ToPagedList(books, bookParameters.PageNumber, bookParameters.PageSize);
         }
