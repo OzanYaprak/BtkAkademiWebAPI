@@ -192,3 +192,15 @@
 2025-04-28 15:15:47.4454 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.4.0.3182. Product version: 5.4.0+4d45d445601312040107cbe2ac00e56c4bf4a60b. GlobalAssemblyCache: False
 2025-04-28 15:15:47.4532 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\oeyaprak\source\repos\BtkAkademiWebAPI\WebApi\bin\Debug\net8.0\NLog.config
 2025-04-28 15:15:47.4532 Info Configuration initialized.
+2025-04-29 10:51:58.5318 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2025-04-29 10:51:58.5475 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.4.0.3182. Product version: 5.4.0+4d45d445601312040107cbe2ac00e56c4bf4a60b. GlobalAssemblyCache: False
+2025-04-29 10:51:58.5555 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\oeyaprak\source\repos\BtkAkademiWebAPI\WebApi\bin\Debug\net8.0\NLog.config
+2025-04-29 10:51:58.5635 Info Configuration initialized.
+2025-04-29 10:53:46.2117 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2025-04-29 10:53:46.2225 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.4.0.3182. Product version: 5.4.0+4d45d445601312040107cbe2ac00e56c4bf4a60b. GlobalAssemblyCache: False
+2025-04-29 10:53:46.2225 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\oeyaprak\source\repos\BtkAkademiWebAPI\WebApi\bin\Debug\net8.0\NLog.config
+2025-04-29 10:53:46.2379 Info Configuration initialized.
+2025-04-29 11:05:17.9779 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2025-04-29 11:05:17.9896 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.4.0.3182. Product version: 5.4.0+4d45d445601312040107cbe2ac00e56c4bf4a60b. GlobalAssemblyCache: False
+2025-04-29 11:05:17.9963 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\oeyaprak\source\repos\BtkAkademiWebAPI\WebApi\bin\Debug\net8.0\NLog.config
+2025-04-29 11:05:17.9963 Info Configuration initialized.

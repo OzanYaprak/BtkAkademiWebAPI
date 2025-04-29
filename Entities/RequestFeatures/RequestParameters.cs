@@ -8,7 +8,7 @@ namespace Entities.RequestFeatures
 {
     public abstract class RequestParameters
     {
-        public const int maxPageSize = 10;
+        public const int maxPageSize = 50;
 
         // Auto-Implemented Property
         public int PageNumber { get; set; }
@@ -21,5 +21,7 @@ namespace Entities.RequestFeatures
             get { return _pageSize; }
             set { _pageSize = value > maxPageSize ? maxPageSize : value; }
         }
+
+        public String? OrderBy { get; set; }
     }
 }

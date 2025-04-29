@@ -1,9 +1,7 @@
 ﻿using Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
 
 namespace Repositories.EFCore.Extensions
 {
@@ -21,6 +19,20 @@ namespace Repositories.EFCore.Extensions
             var lowerCaseTerm = searchTerm.Trim().ToLower();
 
             return books.Where(x => x.Title.ToLower().Contains(searchTerm));
+        }
+
+        public static IQueryable<Book> Sort(this IQueryable<Book> books, string orderByQueryString)
+        {
+            if (string.IsNullOrWhiteSpace(orderByQueryString))
+            {
+                return books.OrderBy(x => x.Id);
+            }
+
+            var orderQuery = OrderQueryBuilder.CreateOrderQuery<Book>(orderByQueryString);
+
+            if (orderQuery is null) { return books.OrderBy(x => x.Id); }
+
+            return books.OrderBy(orderQuery); // System.Linq.Dynamic.Core package install
         }
     }
 }
