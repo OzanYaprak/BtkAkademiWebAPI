@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Entities.DataTransferObjects;
 using Repositories.Interfaces;
 using Services.Interfaces;
 using System;
@@ -15,9 +16,9 @@ namespace Services.Managers
 
         private readonly Lazy<IBookService> _bookService;
 
-        public ServiceManager(IRepositoryManager repositoryManager, ILoggerService logger, IMapper mapper)
+        public ServiceManager(IRepositoryManager repositoryManager, ILoggerService logger, IMapper mapper, IDataShaper<BookDTO> shaper)
         {
-            _bookService = new Lazy<IBookService>(() => new BookManager(repositoryManager, logger, mapper));
+            _bookService = new Lazy<IBookService>(() => new BookManager(repositoryManager, logger, mapper, shaper));
         }
 
         #endregion Constructor

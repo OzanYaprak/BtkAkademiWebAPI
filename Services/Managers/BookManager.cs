@@ -7,6 +7,7 @@ using Repositories.Interfaces;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +21,14 @@ namespace Services.Managers
         private readonly IRepositoryManager _manager;
         private readonly ILoggerService _logger;
         private readonly IMapper _mapper;
+        private readonly IDataShaper<BookDTO> _shaper;
 
-        public BookManager(IRepositoryManager manager, ILoggerService logger, IMapper mapper)
+        public BookManager(IRepositoryManager manager, ILoggerService logger, IMapper mapper, IDataShaper<BookDTO> shaper)
         {
             _manager = manager;
             _logger = logger;
             _mapper = mapper;
+            _shaper = shaper;
         }
 
         #endregion Constructor
@@ -47,7 +50,7 @@ namespace Services.Managers
             await _manager.SaveAsync();
         }
 
-        public async Task<(IEnumerable<BookDTO> books, MetaData metaData)> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges)
+        public async Task<(IEnumerable<ExpandoObject> books, MetaData metaData)> GetAllBooksAsync(BookParameters bookParameters, bool trackChanges)
         {
             //var books = await _manager.BookRepository.GetAllBooksAsync(bookParameters, trackChanges);
             //var mapper = _mapper.Map<IEnumerable<BookDTO>>(books);
@@ -57,7 +60,9 @@ namespace Services.Managers
             var booksWithMetaData = await _manager.BookRepository.GetAllBooksAsync(bookParameters, trackChanges);
             var booksDTO = _mapper.Map<IEnumerable<BookDTO>>(booksWithMetaData);
 
-            return (booksDTO, booksWithMetaData.MetaData);
+            var shapedData = _shaper.ShapeData(booksDTO, bookParameters.Fields);
+
+            return (books: shapedData, metaData: booksWithMetaData.MetaData);
         }
 
         public async Task<BookDTO> GetOneBookByIdAsync(int id, bool trackChanges)
