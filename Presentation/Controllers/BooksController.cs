@@ -26,14 +26,14 @@ namespace Presentation.Controllers
 
         #endregion Dependency Injection
 
-        [HttpGet]
+        [HttpHead]
+        [HttpGet(Name = "GetAllBooksAsync")]
         public async Task<IActionResult> GetAllBooksAsync([FromQuery] BookParameters bookParameters)
         {
             //var books = await _manager.BookService.GetAllBooksAsync(bookParameters, false);
             var pagedResult = await _manager.BookService.GetAllBooksAsync(bookParameters, false);
 
             Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
-            //Test
             return Ok(pagedResult.books);
         }
 
@@ -112,6 +112,14 @@ namespace Presentation.Controllers
             await _manager.BookService.SaveChangesForPatchAsync(result.bookDTOForUpdate, result.book);
 
             return NoContent(); // 204
+        }
+
+        [HttpOptions]
+        public IActionResult GetBooksOptions()
+        {
+            Response.Headers.Add("Allow", "GET,PUT,POST,PATCH,DELETE,HEAD,OPTIONS");
+
+            return Ok();
         }
     }
 }
