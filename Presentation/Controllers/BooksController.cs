@@ -47,7 +47,7 @@ namespace Presentation.Controllers
 
         // Method Seviyesinde Sistem [ServiceFilter(typeof(LogFilterAttribute), Order = 2)] // Order -> İşlem sırasını belirler
         [ServiceFilter(typeof(ValidationFilterAttribute)/*, Order = 1*/)]
-        [HttpPost]
+        [HttpPost(Name = "CreateBookAsync")]
         public async Task<IActionResult> CreateBookAsync([FromBody] BookDTOForInsertion bookDto)
         {
             // ValidationFilterAttribute Kısmına Taşındı

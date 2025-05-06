@@ -1,5 +1,8 @@
 ﻿using Entities.DataTransferObjects;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Presentation.ActionFilters;
 using Repositories.EFCore.Context;
 using Repositories.Interfaces;
@@ -51,6 +54,26 @@ namespace WebApi.Extensions
         public static void ConfigureDataShaper(this IServiceCollection services)
         {
             services.AddScoped<IDataShaper<BookDTO>, DataShaper<BookDTO>>();
+        }
+
+        public static void AddCustomMediaTypes(this IServiceCollection services)
+        {
+            services.Configure<MvcOptions>(config =>
+            {
+                var systemTextJsonOutputFormatter = config.OutputFormatters.OfType<SystemTextJsonOutputFormatter>()?.FirstOrDefault();
+
+                if (systemTextJsonOutputFormatter is not null)
+                {
+                    systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.btkakademi.apiroot+json");
+                }
+
+                var xmlOutpuFormatter = config.OutputFormatters.OfType<XmlDataContractSerializerOutputFormatter>()?.FirstOrDefault();
+
+                if (xmlOutpuFormatter is not null)
+                {
+                    xmlOutpuFormatter.SupportedMediaTypes.Add("application/vnd.btkakademi.apiroot+xml");
+                }
+            });
         }
     }
 }
